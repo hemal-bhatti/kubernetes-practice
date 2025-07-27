@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cluster-ip
+spec:
+  selector:
+    app: myapp<app-naame>
+  ports:
+  - port: 80
+    targetPort: 80
+
+
+# default service is clusterip svc

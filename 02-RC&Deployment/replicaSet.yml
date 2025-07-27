@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rset
+  labels:
+    app: myapp
+    key: value
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      key: my-nginx-app    # match a label which have my-nginx-app label and implement change to that label;
+  template:
+    metadata:
+      labels:
+        key: my-nginx-app
+    spec:
+      containers:
+        - name: myapp
+          image: nginx:latest
+          ports:
+          - containerPort: 80

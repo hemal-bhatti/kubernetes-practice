@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container
+  labels:
+    app.kubernetes.io/name: init-container
+spec:
+  containers:
+  - name: main-container
+    image: busybox:1.28
+    env:
+    - name: EXAMPLE_ENV
+      value: "Hemal"
+    command: ['sh', '-c', 'echo Hello from the main container && sleep 3600']
+  initContainers:
+  - name: init-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'until nslookup my-svc.default.svc.cluster.local; do echo waiting for my-svc; sleep 2; done']

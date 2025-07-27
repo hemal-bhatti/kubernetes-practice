@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: default-namespace
+spec:
+  selector:
+    matchLabels:
+      app: default-namespace
+  template:
+    metadata:
+      labels:
+        app: default-namespace
+    spec:
+      containers:
+      - name: default-namespace
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

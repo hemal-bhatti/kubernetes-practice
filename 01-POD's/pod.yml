@@ -1,0 +1,27 @@
+# apiVersion:
+# kind:
+# metadata:
+# spec:
+
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    app.kubernetes.io/name: myapp
+    env: Dev
+    name: nginx-pod
+spec:
+  containers:
+  - name: myapp
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
