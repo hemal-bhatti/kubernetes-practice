@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: manual-scheduling
+  labels:
+    app.kubernetes.io/name: manual-scheduling
+spec:
+  containers:
+  - name: manual-scheduling
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  nodeName: cka-main-cluster45-worker

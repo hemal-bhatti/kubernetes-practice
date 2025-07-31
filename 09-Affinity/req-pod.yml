@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: req-during
+  labels:
+    app.kubernetes.io/name: req-during
+spec:
+  containers:
+  - name: req-during
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: Disktype
+            operator: In
+            values:
+            - ssd
+
+
+            # - key: gpu
+            #   operator: Exists
+            
