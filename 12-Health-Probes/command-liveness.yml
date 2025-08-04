@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: command-liveness
+  labels:
+    test: command-liveness
+spec:
+  containers:
+  - name: command-liveness
+    image: nginx:latest
+    command: ["/bin/sh", "-c", "touch /tmp/healthy && sleep 30; rm -f /tmp/healthy && sleep 600"]
+    livenessProbe:
+      exec:
+        command: ["/bin/sh", "-c", "cat  /tmp/healthy"]
+      initialDelaySeconds: 5  # before performing the first probe will wait 5 seconds
+      periodSeconds: 5        # interval between probes (check health every 5 seconds)
+      failureThreshold: 2     # number of consecutive failures before marking the container as unhealthy
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+
+
+# if health check fails, it gives non-zero exit code and container is restarted
+# if health check passes, it gives zero exit code

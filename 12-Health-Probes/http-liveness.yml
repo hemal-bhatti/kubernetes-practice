@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: http-liveness
+  labels:
+    app.kubernetes.io/name: http-liveness
+spec:
+  containers:
+  - name: http-liveness
+    image: nginx:latest
+    livenessProbe:
+      httpGet:
+        path: /healthz # HTTP endpoint to check
+        port: 80
+      initialDelaySeconds: 5  # before performing the first probe will wait 5 seconds
+      periodSeconds: 5        # interval between probes (check health every 5 seconds)
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80

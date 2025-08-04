@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-pod--with-all-values
+  labels:
+    app.kubernetes.io/name: configmap-pod--with-all-values
+spec:
+  containers:
+  - name: configmap-pod--with-all-values
+    image: nginx:latest
+    env:
+      - name: FIRSTNAME
+        valueFrom:
+          configMapKeyRef:
+            name: my-configmap
+            key: firstname
+      - name: LASTNAME
+        valueFrom:
+          configMapKeyRef:
+            name: my-configmap
+            key: lastname
+      - name: PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: my-secret
+            key: password
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+
+

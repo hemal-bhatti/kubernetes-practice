@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memory-request1
+  namespace: memory-request  
+  labels:
+    app.kubernetes.io/name: memory-request1
+spec:
+  containers:
+  - name: memory-request1
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"] # This will create a memory load up to 150Mi
+    resources:
+      requests:
+        memory: "50Mi"  # Pod get 50Mi memory at pod start
+        cpu: "250m"
+      limits:
+        memory: "100Mi" # Pod can use max 100Mi memory
+        cpu: "500m"
+    ports:
+      - containerPort: 80

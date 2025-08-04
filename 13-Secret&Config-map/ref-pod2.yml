@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-map-all-file-value
+  labels:
+    app.kubernetes.io/name: config-map-all-file-value
+spec:
+  containers:
+  - name: config-map-all-file-value
+    image: nginx:latest
+    envFrom:
+      - configMapRef:
+          name: my-configmap
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80

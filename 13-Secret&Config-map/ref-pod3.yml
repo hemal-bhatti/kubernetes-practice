@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-using-mount-volume
+  labels:
+    app.kubernetes.io/name: config-using-mount-volume
+spec:
+  containers:
+  - name: config-using-mount-volume
+    image: nginx:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: my-configmap
+        items:
+        - key: firstname
+          path: firstname.txt
+        - key: lastname
+          path: lastname.txt
